@@ -1,0 +1,221 @@
+---
+title       : Introdução a R
+subtitle    : 
+author      : Andre Carvalho
+job         : Consultant @ Summa Technologies
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Introdução
+
+1. &gt; Data Science &lt;
+2. Não é necessariamente usada no produto final
+3. Artigos e apresentações
+
+--- .class #id 
+
+## Introdução
+
+1. Data Science
+2. &gt; Não é necessariamente usada no produto final &lt;
+3. Artigos e apresentações
+
+--- .class #id
+
+## Introdução
+
+1. Data Science
+2. Não é necessariamente usada no produto final
+3. &gt; Artigos e apresentações &lt;
+
+--- .class #id
+
+## Primeiros passos
+
+- Instalar o R
+
+```{bash}
+# Exemplo para o Ubuntu 14.04
+echo \
+'deb http://http://www.vps.fmvz.usp.br/CRAN/bin/linux/ubuntu trusty/' \
+| sudo tee -a /etc/apt/sources.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+sudo apt-get update
+sudo apt-get install r-base-dev
+```
+
+- Instalar o RStudio (Opcional)
+
+--- .class #id
+
+## Operadores Aritméticos
+
+- Operadores comuns: +, -, \*, /, ^ ou \*\*
+- Atribuição
+
+```{r}
+v1 <- seq(-10, 10, 2)
+v2 = c(1, 2, 3, 4)
+assign("v3", rep(20, 4))
+v1; v2; v3
+```
+
+--- .class #id
+
+## Operadores Lógicos
+
+- Operadores comuns: &lt;, &lt;=, &gt; &gt;=, ==, !=, !
+- E e OU escalares: &&, ||
+
+```{r}
+c(T, T, F) && c(T, F, T)
+c(F, T, F) && c(T, F, T)
+```
+
+--- .class #id
+
+## Operadores Lógicos
+
+- E e OU usados com vetores: &, |
+```{r}
+c(T, T, F) | c(T, F, T)
+c(F, T, F) & c(T, F, T)
+```
+
+--- .class #id
+
+## Condicionais
+
+```{r}
+if (rnorm(1) > 0) {
+  print('Random number above 50% of a normal distribution')
+} else {
+  print ('Random number below 50% of a normal distribution')
+}
+v4 <- if (rnorm(1) > 0) 1 else -1
+v5 <- ifelse(rnorm(10) > 0, 1, -1)
+v4; v5
+```
+
+--- .class #id
+
+## Laços
+
+- For:
+```{r, results='hide'}
+for (value in seq(1, 3)) { print(value) }
+```
+
+- While:
+```{r}
+x <- rnorm(1)
+while (x < 0) { x <- rnorm(1) }
+```
+
+- Apply: apply, lapply, mapply, sapply e tapply
+```{r}
+sapply(c(1, 2, 3), function(el) { el * el })
+```
+
+--- .class #id
+
+## Funções
+
+```{r}
+square <- function(x) { x * x }
+
+complexObject <- function(x) {
+  setX <- function(x1) {
+    x <<- x1
+  }
+  getX <- function() x
+}
+```
+
+--- .class #id
+
+## Matrizes
+
+- Criando uma matriz
+```{r}
+m1 <- matrix(seq(1, 9), ncol = 3, nrow =  3)
+m1
+```
+
+- Fazendo uma operação com a matriz
+```{r}
+m2 <- m1 * m1
+m2[2,]
+```
+
+--- .class #id
+
+## Data Frames
+
+```{r}
+df1 <- data.frame(id = c(1, 2, 3), categoria = c('a', 'b', 'c'),
+                  prob = rbinom(3, size = 4, prob = 0.5))
+df1
+```
+
+--- .class #id
+
+## Manipulando um Data Frame
+
+- Projeção e intervalo
+```{r}
+df1[1:2, c('id', 'categoria')]
+```
+
+- Filtro
+```{r}
+df1[df1$prob > 2 , c('categoria', 'prob')]
+```
+
+--- .class #id
+
+## Head
+
+```{r}
+data(mtcars) # Carrega o data set na memória
+head(mtcars)
+
+```
+
+--- .class #id
+
+## Summary
+
+```{r}
+summary(mtcars[,1:4])
+```
+
+--- .class #id
+
+## Formatos de Arquivos
+
+Formatos suportados:
+
+1. CSVs: read.table e read.csv
+2. MySQL: pacote RMySQL
+3. HTML
+4. XML: pacote XML
+5. JSON: pacote jsonlite
+6. HDF5: pacote rhdf5
+
+entre outros...
+
+--- .class #id
+
+## Gráficos
+
+- Base plot:
+
+```{r}
+
+```
