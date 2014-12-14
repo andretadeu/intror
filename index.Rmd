@@ -14,24 +14,24 @@ knit        : slidify::knit2slides
 ## Introdução
 
 1. &gt; Data Science &lt;
-2. Não é necessariamente usada no produto final
-3. Artigos e apresentações
+2. Artigos e apresentações
+3. Não é necessariamente usada no produto final
 
 --- .class #id 
 
 ## Introdução
 
 1. Data Science
-2. &gt; Não é necessariamente usada no produto final &lt;
-3. Artigos e apresentações
+2. &gt; Artigos e apresentações &lt;
+3. Não é necessariamente usada no produto final
 
 --- .class #id
 
 ## Introdução
 
 1. Data Science
-2. Não é necessariamente usada no produto final
-3. &gt; Artigos e apresentações &lt;
+2. Artigos e apresentações
+3. &gt; Não é necessariamente usada no produto final &lt;
 
 --- .class #id
 
@@ -214,8 +214,49 @@ entre outros...
 
 ## Gráficos
 
+```{r, echo=FALSE}
+source('downloadData.R')
+downloadData('NEI_data.zip')
+NEI <- readRDS("summarySCC_PM25.rds")
+
+subNEI <- NEI[NEI$fips == 24510,]
+data <- aggregate(subNEI$Emissions, by = list(subNEI$year), FUN = sum)
+colnames(data) <- c("Year", "Emissions")
+```
+
 - Base plot:
 
-```{r}
-
+```{r, echo=FALSE}
+barplot(height = data$Emissions,
+        main = "Total emissions from PM2.5 in Baltimore per year",
+        xlab = "Year", ylab = "Emissions (tons)",
+        names.arg = data$Year, ylim = c(0, 4000), xpd = FALSE,
+        col = c("firebrick1", "moccasin", "skyblue4", "darkolivegreen2"))
+abline(h = max(data$Emissions), lwd= 2)
 ```
+
+--- .class #id
+
+## Gráficos
+
+- ggplot2:
+
+```{r, echo=FALSE, warning=FALSE}
+library('ggplot2')
+NEI <- readRDS("summarySCC_PM25.rds")
+subNEI <- NEI[NEI$fips == 24510,]
+data <- aggregate(subNEI$Emissions, by = list(subNEI$year, subNEI$type), FUN = sum)
+colnames(data) <- c("Year", "Type", "Emissions")
+ggplot(data, aes(x = Year, y = Emissions, fill = Type)) +
+        geom_bar(position = "dodge", stat = "identity") +
+        ggtitle("Emissions in Baltimore per year") +
+        ylab("Emissions (tons)") +
+        scale_x_continuous(breaks = c(1998,2002,2005,2008))
+```
+
+--- .class #id
+
+## Resumo
+
+1. Fácil de trabalhar com vetores.
+2. Muitos recursos oferecidos por pacotes.
